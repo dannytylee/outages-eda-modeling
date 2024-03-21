@@ -14,6 +14,67 @@ Our goal for the first section of this project is to investigate the underlying 
 
 The data set we are using has 1534 rows, each representing a major outage in the continental United States from January 2000 to July 2016, and 54 columns representing:
 
+| Columns                 | dtype  |
+|:------------------------|:-------|
+| OBS                     | object |
+| YEAR                    | object |
+| MONTH                   | object |
+| U.S._STATE              | object |
+| POSTAL.CODE             | object |
+| NERC.REGION             | object |
+| CLIMATE.REGION          | object |
+| ANOMALY.LEVEL           | object |
+| CLIMATE.CATEGORY        | object |
+| OUTAGE.START.DATE       | object |
+| OUTAGE.START.TIME       | object |
+| OUTAGE.RESTORATION.DATE | object |
+| OUTAGE.RESTORATION.TIME | object |
+| CAUSE.CATEGORY          | object |
+| CAUSE.CATEGORY.DETAIL   | object |
+| HURRICANE.NAMES         | object |
+| OUTAGE.DURATION         | object |
+| DEMAND.LOSS.MW          | object |
+| CUSTOMERS.AFFECTED      | object |
+| RES.PRICE               | object |
+| COM.PRICE               | object |
+| IND.PRICE               | object |
+| TOTAL.PRICE             | object |
+| RES.SALES               | object |
+| COM.SALES               | object |
+| IND.SALES               | object |
+| TOTAL.SALES             | object |
+| RES.PERCEN              | object |
+| COM.PERCEN              | object |
+| IND.PERCEN              | object |
+| RES.CUSTOMERS           | object |
+| COM.CUSTOMERS           | object |
+| IND.CUSTOMERS           | object |
+| TOTAL.CUSTOMERS         | object |
+| RES.CUST.PCT            | object |
+| COM.CUST.PCT            | object |
+| IND.CUST.PCT            | object |
+| PC.REALGSP.STATE        | object |
+| PC.REALGSP.USA          | object |
+| PC.REALGSP.REL          | object |
+| PC.REALGSP.CHANGE       | object |
+| UTIL.REALGSP            | object |
+| TOTAL.REALGSP           | object |
+| UTIL.CONTRI             | object |
+| PI.UTIL.OFUSA           | object |
+| POPULATION              | object |
+| POPPCT_URBAN            | object |
+| POPPCT_UC               | object |
+| POPDEN_URBAN            | object |
+| POPDEN_UC               | object |
+| POPDEN_RURAL            | object |
+| AREAPCT_URBAN           | object |
+| AREAPCT_UC              | object |
+| PCT_LAND                | object |
+| PCT_WATER_TOT           | object |
+| PCT_WATER_INLAND        | object |
+
+
+
 ---
 
 ## Data Cleaning and Exploratory Data Analysis
