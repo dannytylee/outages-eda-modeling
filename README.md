@@ -6,7 +6,7 @@
 
 This project aims to investigate the factors that lead to power outage events with the hopes of gaining valuable insights into why these events occur and the ways in which outages can be mitigated. If you are interested in learning more about the dataset we based our project on, more information can be found [here](https://www.sciencedirect.com/science/article/pii/S2352340918307182). The power outage data exploration and prediction on website is for DSC 80 at UCSD.
 
-### Introduction
+## Introduction
 
 the so what?
 
