@@ -8,10 +8,11 @@ This project aims to investigate the factors that lead to power outage events wi
 
 ## Introduction
 
-the so what?
+Our lives are becoming increasingly exposed to the far reaching effects of climate change. One of these effects is power outages, and the increasing risk of power outages resulting from natural disasters exacerbated by climate change. In California, climate change has undoubtedly contributed to longer wildfire seasons, with larger and more intense wildfires, causing damage to power infrastructure and disruptions to communities and ecosystems.
 
+Our goal for the first section of this project is to investigate the underlying climate trends over time and geographical patterns to develop a better understanding about power outage risks. To be more specific, <b>how do variables like the number of customers affected by power outage events, changing climate, and geographical position of states contribute to the risk of potential power outages and their duration?<b> We believe that this knowledge is critical for enhancing public safety, supporting vulnerable populations, and mitigating environmental impacts.
 
-Our goal for the first part of this project is to investigate underlying climate trends over time and geographical patterns to develop a better understanding about where power outages are more likely to occur and their magnitudes. To be more specific, how do variables about the number of customers affected by historical power outage events, changing climate, and geographical position of states contribute to the risk of potential power outages and their duration in the present?
+The data set we are using has 1534 rows, each representing a major outage in the continental United States from January 2000 to July 2016, and 54 columns representing:
 
 ---
 
