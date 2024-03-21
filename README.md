@@ -43,6 +43,13 @@ messy_outages = pd.read_excel('outage.xlsx')
 print(messy_outages.head().to_markdown(index=False))
 ```
 
+<iframe
+  src="assets/univariate_1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 **Data Cleaning**
 
 ---
