@@ -50,6 +50,37 @@ messy_outages = pd.read_excel('outage.xlsx')
   frameborder="0"
 ></iframe>
 
+
+
+
+<iframe
+  src="assets/univariate_2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+
+
+<iframe
+  src="assets/bivariate_1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+
+
+<iframe
+  src="assets/bivariate_2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
 **Data Cleaning**
 ```py
 # Removes three unnecessary rows above column names and unnecessary columns
