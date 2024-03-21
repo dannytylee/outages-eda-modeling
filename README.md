@@ -1,21 +1,10 @@
-### Power Outage Data Exploration & Prediction
+Power Outage Data Exploration & Prediction
 
 **By Jesse Huang and Danny Lee**
 
 **Imports**
 ```py
-import pandas as pd
-import numpy as np
-from pathlib import Path
-# newly added
-from datetime import datetime, time, timedelta
-from sklearn.preprocessing import OneHotEncoder, PolynomialFeatures, FunctionTransformer, StandardScaler, QuantileTransformer
-from sklearn.linear_model import LinearRegression
-from sklearn.pipeline import Pipeline, make_pipeline
-from sklearn.compose import ColumnTransformer, make_column_transformer, make_column_selector
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import mean_squared_error
-import warnings
+
 
 import plotly.express as px
 pd.options.plotting.backend = 'plotly'
