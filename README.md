@@ -1,3 +1,5 @@
+### Power Outage Data Exploration & Prediction
+
 **By Jesse Huang and Danny Lee**
 
 **Imports**
