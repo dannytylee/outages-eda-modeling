@@ -1,4 +1,6 @@
-**Name(s)**: Jesse Huang & Danny Lee
+# Power Outage Data Exploration & Prediction
+
+**By Jesse Huang and Danny Lee**
 
 **Imports**
 ```py
