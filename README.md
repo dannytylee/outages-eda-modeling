@@ -1,11 +1,7 @@
-# Power Outage Data Exploration & Prediction
-
 **Name(s)**: Jesse Huang & Danny Lee
 
-**Website Link**: (your website link)
-
-### Imports
-```
+**Imports**
+```py
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -27,7 +23,46 @@ warnings.filterwarnings(action='ignore', category=UserWarning, module='sklearn')
 ```
 
 **Formula of RMSE**
-```
+```py
 def rmse(actual, pred):
     return np.sqrt(np.mean((actual - pred) ** 2))
 ```
+
+---
+
+## Introduction
+Our goal for the first part of this project is to investigate underlying climate trends over time and geographical patterns to develop a better understanding about where power outages are more likely to occur and their magnitudes. To be more specific, how do variables about the number of customers affected by historical power outage events, changing climate, and geographical position of states contribute to the risk of potential power outages and their duration in the present?
+
+---
+
+## Data Cleaning and Exploratory Data Analysis
+```py
+messy_outages = pd.read_excel('outage.xlsx')
+print(messy_outages.head().to_markdown(index=False))
+```
+
+**Data Cleaning**
+
+---
+
+## Assessment of Missingness
+
+---
+
+## Hypothesis Testing
+
+---
+
+## Framing our Prediction Problem
+
+---
+
+## Baseline Model
+
+---
+
+## Final Model
+
+---
+
+## Fairness Analysis
