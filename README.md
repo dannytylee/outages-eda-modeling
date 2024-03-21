@@ -2,26 +2,17 @@ Power Outage Data Exploration & Prediction
 
 **By Jesse Huang and Danny Lee**
 
-**Imports**
-```py
+**Project Overview**
 
 
-import plotly.express as px
-pd.options.plotting.backend = 'plotly'
 
-warnings.filterwarnings(action='ignore', category=UserWarning, module='sklearn')
-#from dsc80_utils import * # Feel free to uncomment and use this.
-```
 
-**Formula of RMSE**
-```py
-def rmse(actual, pred):
-    return np.sqrt(np.mean((actual - pred) ** 2))
-```
 
----
+**Investigating Topic and Introduction**
 
-## Introduction
+the so what?
+
+
 Our goal for the first part of this project is to investigate underlying climate trends over time and geographical patterns to develop a better understanding about where power outages are more likely to occur and their magnitudes. To be more specific, how do variables about the number of customers affected by historical power outage events, changing climate, and geographical position of states contribute to the risk of potential power outages and their duration in the present?
 
 ---
