@@ -2,11 +2,7 @@
 
 **By Jesse Huang and Danny Lee**
 
-**Project Overview**
-
-
-
-
+## Project Overview
 
 **Investigating Topic and Introduction**
 
