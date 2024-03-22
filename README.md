@@ -81,6 +81,7 @@ Previously all columns were dtype objects, the latter half of the dataframe now 
 
 
 ### Univariate Analysis
+
 **Distribution of Power Outages**
 
 The histogram below shows the frequency of power outages for each U.S. state from 2000 to 2016 in our dataset.
@@ -151,6 +152,11 @@ A pivot table is show below. According to the pivot table, it is apparent that t
 |      0   |      0 |      0 |      0 | 120212 |      0   |  15000 |      0 | 126000   |  35500   |      0   |  11500     |      0    |      0   |      0 |      0   |      0   |
 
 Additional research shows, "Tropical cyclones, storms with high winds that originate over tropical oceans, make a power outage 14 times more likely. And a tropical cyclone with heavy precipitation on a hot day—like the hurricanes that each fall hit the Gulf Coast? They make power outages 52 times more likely" [(source)](https://deohs.washington.edu/hsm-blog/these-four-regions-us-are-hardest-hit-power-outages). This article's findings are consistent with the pivot table and boxplot seen above.
+
+## Assessment of Missingness
+
+### NMAR Analysis
+
 
 
 
