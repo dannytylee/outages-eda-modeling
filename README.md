@@ -150,7 +150,7 @@ A pivot table is show below. According to the pivot table, it is apparent that t
 |  32000   | 175611 | 769750 | 115750 | 197855 | 613378   | 493523 | 179952 | 265810   | 246725   | 170847   |  62703.7   |  18166.1  |  44523.3 | 933475 |  20034.5 |  28575   |
 |      0   |      0 |      0 |      0 | 120212 |      0   |  15000 |      0 | 126000   |  35500   |      0   |  11500     |      0    |      0   |      0 |      0   |      0   |
 
-Additional research shows, "Tropical cyclones, storms with high winds that originate over tropical oceans, make a power outage 14 times more likely. And a tropical cyclone with heavy precipitation on a hot day—like the hurricanes that each fall hit the Gulf Coast? They make power outages 52 times more likely" [(source)](https://deohs.washington.edu/hsm-blog/these-four-regions-us-are-hardest-hit-power-outages). The article's findings are consistent with the pivot table and boxplot seen above.
+Additional research shows, "Tropical cyclones, storms with high winds that originate over tropical oceans, make a power outage 14 times more likely. And a tropical cyclone with heavy precipitation on a hot day—like the hurricanes that each fall hit the Gulf Coast? They make power outages 52 times more likely" [(source)](https://deohs.washington.edu/hsm-blog/these-four-regions-us-are-hardest-hit-power-outages). This article's findings are consistent with the pivot table and boxplot seen above.
 
 
 
