@@ -34,6 +34,7 @@ The data set we are using has 1534 rows, each representing a major outage in the
 In our study, we primarily used 5 columns: CLIMATE.REGION , ANOMALY.LEVEL, CLIMATE.CATEGORY, DEMAND.LOSS.MW, and POPULATION. We found these columns to be particularly helpful because they represent many of the direct risk characteristics that may contribute to the power outage event itself and the amount of time it takes to restore back the power. Since we are also considering climate variables, many of our exploratory visualizations were conditioned on years from the YEAR column to illustrate trends and patterns over time.
 
 <br>
+<br>
 
 ---
 
