@@ -49,40 +49,10 @@ In order to increase the readability and accuracy of our data, we followed the f
 
 **After cleaning the data, the columns now look like this**
 
-Previously all columns were dtype objects, now
+Previously all columns were dtype objects, the latter half of the dataframe now looks like this
 
 | Column                | Dtype          |
 |:----------------------|:---------------|
-| OBS                   | object         |
-| YEAR                  | object         |
-| MONTH                 | object         |
-| U.S._STATE            | object         |
-| POSTAL.CODE           | object         |
-| NERC.REGION           | object         |
-| CLIMATE.REGION        | object         |
-| ANOMALY.LEVEL         | object         |
-| CLIMATE.CATEGORY      | object         |
-| CAUSE.CATEGORY        | object         |
-| CAUSE.CATEGORY.DETAIL | object         |
-| HURRICANE.NAMES       | object         |
-| OUTAGE.DURATION       | float64        |
-| DEMAND.LOSS.MW        | object         |
-| CUSTOMERS.AFFECTED    | object         |
-| RES.PRICE             | object         |
-| COM.PRICE             | object         |
-| IND.PRICE             | object         |
-| TOTAL.PRICE           | object         |
-| RES.SALES             | object         |
-| COM.SALES             | object         |
-| IND.SALES             | object         |
-| TOTAL.SALES           | object         |
-| RES.PERCEN            | float64        |
-| COM.PERCEN            | float64        |
-| IND.PERCEN            | float64        |
-| RES.CUSTOMERS         | object         |
-| COM.CUSTOMERS         | object         |
-| IND.CUSTOMERS         | object         |
-| TOTAL.CUSTOMERS       | object         |
 | RES.CUST.PCT          | float64        |
 | COM.CUST.PCT          | float64        |
 | IND.CUST.PCT          | float64        |
