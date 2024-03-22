@@ -163,13 +163,43 @@ NMAR is the term that describes a situation where the chance that a value is mis
 
 ** Power Outage Cause and Power Outage Duration **
 
-Null Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does not depend on values in OUTAGE.DURATION
+Null Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does not depend on the values in OUTAGE.DURATION
 
-Alternative Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does depend on values in OUTAGE.DURATION
+Alternative Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does depend on the values in OUTAGE.DURATION
 
 Test Statistic: The absolute difference in means
 
+Below shows the empirical distribution of our test statistics with 1000 permutations, the vertical red line marks the observed test statistic and the vertical purple line marks the critical value.
 
+<iframe
+  src="assets/missingness_1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+From the permutation test, we fail to reject the null hypothesis because 0.089 is greater than the 0.05 pre-defined cutoff value. Thus, the missingness of CAUSE.CATEGORY.DETAIL is MCAR.
+
+<br>
+
+** Power Outage Cause and Power Outage Duration **
+
+Null Hypothesis: The missingness of the values in CAUSE.CATEGORY.DETAIL does not depend on the values in TOTAL.CUSTOMERS
+
+Alternative Hypothesis: The missingness of the values in CAUSE.CATEGORY.DETAIL does depend on the values in TOTAL.CUSTOMERS
+
+Test Statistic: The absolute difference in means
+
+Below shows the empirical distribution of our test statistics with 1000 permutations, the vertical red line marks the observed test statistic and the vertical purple line marks the critical value.
+
+<iframe
+  src="assets/missingness_1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+From the permutation test, we reject the null hypothesis because 0.0 is less than the 0.05 pre-defined cutoff value. Thus, the missingness of CAUSE.CATEGORY.DETAIL is MAR, dependent on TOTAL.CUSTOMERS.
 
 
 **Data Cleaning**
