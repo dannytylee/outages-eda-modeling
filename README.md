@@ -578,6 +578,13 @@ After building our model, it is essential to scrutinize it not only in efficacy 
 
 **Significance Level:** Following permutation testing, we decided to use a significance level of 5%.
 
+<iframe
+  src="assets/fairness.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 The figure above demonstrates the empirical distribution of test statistics over 500 permutations, with the red line representing the observed statistic of -23.89. We ultimately calculate a p–value of 0.16, greater than the p-value of 0.05, which leads us to conclude that we fail to reject the null hypothesis, and have no significant evidence that the root mean square error between the East and West regions are different. Thus, our fairness test suggests that our model is fair, with any differences being attributed to random chance.
 
 ---
