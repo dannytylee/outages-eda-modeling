@@ -8,7 +8,7 @@
 
 This project aims to investigate the factors that lead to power outage events with the hopes of gaining valuable insights into why these events occur and the ways in which outages can be mitigated. If you are interested in learning more about the dataset we based our project on, more information can be found [here](https://www.sciencedirect.com/science/article/pii/S2352340918307182). The power outage data exploration and prediction on website is for DSC 80 at UCSD.
 
-### Introduction
+## Introduction
 
 Our lives are becoming increasingly exposed to the far reaching effects of climate change. One of these effects is power outages, and the increasing risk of power outages resulting from natural disasters exacerbated by climate change. In California, climate change has undoubtedly contributed to longer wildfire seasons, with larger and more intense wildfires, causing damage to power infrastructure and disruptions to communities and ecosystems.
 
