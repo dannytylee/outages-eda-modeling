@@ -202,6 +202,24 @@ Below shows the empirical distribution of our test statistics with 1000 permutat
 From the permutation test, we reject the null hypothesis because 0.0 is less than the 0.05 pre-defined cutoff value. Thus, the missingness of CAUSE.CATEGORY.DETAIL is MAR, dependent on TOTAL.CUSTOMERS.
 
 
+## Hypothesis Testing
+
+**Severe weather' and Intentional attack**
+
+Null Hypothesis: The distribution of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from the same distribution and any observed difference is due to random chance
+
+Alternative Hypothesis: The distributions of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from different population distributions
+
+
+
+<iframe
+  src="assets/hyp_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
 **Data Cleaning**
 ```py
 # Removes three unnecessary rows above column names and unnecessary columns
