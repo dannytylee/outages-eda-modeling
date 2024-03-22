@@ -134,7 +134,7 @@ This box plot reveals that the East North Central climate region experiences the
   frameborder="0"
 ></iframe>
 
-**Interesting Aggregates**
+### Interesting Aggregates
 
 A pivot table is show below. According to the pivot table, it is apparent that the Southwest and Northwest climate regions were the least affected by power outages, for many of their columns are filled with zeros representing zero hours of power outage during those years. On the other hand, when we look at the columns for the South climate region, all the columns are filled with large values. This indicates that the South climate region was one of the most heavily affected by power outages. These findings are consistent with the boxplot seen above.
 
