@@ -161,6 +161,14 @@ NMAR is the term that describes a situation where the chance that a value is mis
 
 ### Missingness Dependency
 
+** Power Outage Cause and Power Outage Duration **
+
+Null Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does not depend on values in OUTAGE.DURATION
+
+Alternative Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does depend on values in OUTAGE.DURATION
+
+Test Statistic: The absolute difference in means
+
 
 
 
