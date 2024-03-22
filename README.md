@@ -167,7 +167,7 @@ Null Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does not dep
 
 Alternative Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does depend on the values in OUTAGE.DURATION
 
-Test Statistic: The absolute difference in means
+We created a new column representing the missingness of power outage cause for each row, and shuffled this column for permutation. Because power outage duration is a numerical variable, we use the absolute mean difference of power outage duration when power outage cause is and is not missing as our test statistics.
 
 Below shows the empirical distribution of our test statistics with 1000 permutations, the vertical red line marks the observed test statistic and the vertical purple line marks the critical value.
 
@@ -182,13 +182,13 @@ From the permutation test, we fail to reject the null hypothesis because 0.089 i
 
 <br>
 
-** Power Outage Cause and Power Outage Duration **
+** Power Outage Cause and Total Customers **
 
 Null Hypothesis: The missingness of the values in CAUSE.CATEGORY.DETAIL does not depend on the values in TOTAL.CUSTOMERS
 
 Alternative Hypothesis: The missingness of the values in CAUSE.CATEGORY.DETAIL does depend on the values in TOTAL.CUSTOMERS
 
-Test Statistic: The absolute difference in means
+We created a new column representing the missingness of power outage cause for each row, and shuffled this column for permutation. Because total customers is a numerical variable, we use the absolute mean difference of total customers when power outage cause is and is not missing as our test statistics.
 
 Below shows the empirical distribution of our test statistics with 1000 permutations, the vertical red line marks the observed test statistic and the vertical purple line marks the critical value.
 
