@@ -539,6 +539,7 @@ Using cross validation, we choose between 7 combinations of features
 7. ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, YEAR, MONTH, CAUSE.CATEGORY, CLIMATE.REGION
 
 After performing k-fold cross validation with 5 folds, we obtain the following table.
+
 | Validation Fold | sample_1  | sample_2  | sample_3  | sample_4  | sample_5  | sample_6  | sample_7  |
 |-----------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
 | Fold 1      	| 63.231110 | 63.098073 | 63.134034 | 63.092402 | 71.345084 | 72.005555 | 63.192334 |
@@ -547,9 +548,8 @@ After performing k-fold cross validation with 5 folds, we obtain the following t
 | Fold 4      	| 79.489611 | 79.683935 | 79.820178 | 79.871914 | 68.978334 | 72.351689 | 79.660000 |
 | Fold 5      	| 73.959864 | 74.351174 | 74.225691 | 74.259999 | 70.401243 | 64.150105 | 73.927456 |
 
+The average validation RMSE between the 5 folds is below. As you can see, sample_6 has the lowest average validation RMSE.
 
-
-The average validation RMSE between the 5 folds is below. As you can see, sample_6 has the 
 | Sample   | Value 	|
 |----------|-----------|
 | sample_1 | 70.252871 |
@@ -560,7 +560,7 @@ The average validation RMSE between the 5 folds is below. As you can see, sample
 | sample_6 | 65.234591 |
 | sample_7 | 70.422838 |
 
-WRITE. As I previously mentioned, linear regression can be n-dimensional. Hyperparameter. Degree 1.
+As I previously mentioned, linear regression can be n-dimensional, using cross validation, we were alsob able to obtain that degree 1 has the lowest testing error. This suggests that although the data may have not been entirely linear, the linear model works best for this particular prediction problem.
 
 The final model performance reports a R-squared of 0.29 for the training set, and 0.14 for the testing set. The RMSE for the training set is 59.48, and the RMSE for the testing set is 80.49. Overall, using cross validation allowed us to improve our model’s performance by around 120%.
 
