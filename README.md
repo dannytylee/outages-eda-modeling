@@ -45,6 +45,8 @@ In order to increase the readability and accuracy of our data, we followed the f
 3. <b>Converting percentages to proportions:</b> This step allows for arithmetic operations and enhanced interpretability during data analysis. Proportions rid the need of percentage symbols which are difficult to work with when manipulating data and performing conversions.
 4. <b>Combining two columns into one:</b> This step combines OUTAGE.START.DATE and OUTAGE.START.TIME into OUTAGE.START, and OUTAGE.END.DATE and OUTAGE.END.TIME into OUTAGE.RESTORATION. This is important because it reduces the size of the dataframe for efficiency, simplicity, and easy access to both the date and time.
 
+<br>
+
 **After cleaning the data, the columns now look like this**
 
 Previously all columns were dtype objects, now
