@@ -1,5 +1,4 @@
-# Power Outage Data Exploration &amp; Prediction
-==========================================
+# Power Outage Data Exploration & Prediction
 
 **By Jesse Huang and Danny Lee**
 
