@@ -214,6 +214,9 @@ Null Hypothesis: The distribution of outage duration with cause of 'severe weath
 Alternative Hypothesis: The distributions of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from different population distributions
 
 
+Significance Level: To ensure the accuracy of our conclusion on whether sereve weather adn intentional attacks come from the same distribution, we decided to use the conventional significance level of 5%
+
+Below shows the empirical distribution of our test statistics with 1000 permutations, the vertical red line marks the observed test statistic and the vertical purple line marks the critical value.
 
 <iframe
   src="assets/hyp_test.html"
@@ -221,6 +224,8 @@ Alternative Hypothesis: The distributions of outage duration with cause of 'seve
   height="600"
   frameborder="0"
 ></iframe>
+
+We can see that our observed statistic falls far from distribution of test statistics, meaning that we reject the null hypothesis in favor of the alternative hypothesis. In other words, the permutation test suggests that the cause of 'severe weather' and 'intentional attack' are not drawn from the same underlying population distribution.
 
 ---
 
