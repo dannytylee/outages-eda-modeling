@@ -161,11 +161,11 @@ NMAR is the term that describes a situation where the chance that a value is mis
 
 ### Missingness Dependency
 
-** Power Outage Cause and Power Outage Duration **
+**Power Outage Cause and Power Outage Duration**
 
-Null Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does not depend on the values in OUTAGE.DURATION
+**Null Hypothesis:** The missingness of values in CAUSE.CATEGORY.DETAIL does not depend on the values in OUTAGE.DURATION
 
-Alternative Hypothesis: The missingness of values in CAUSE.CATEGORY.DETAIL does depend on the values in OUTAGE.DURATION
+**Alternative Hypothesis:** The missingness of values in CAUSE.CATEGORY.DETAIL does depend on the values in OUTAGE.DURATION
 
 We created a new column representing the missingness of power outage cause for each row, and shuffled this column for permutation. Because power outage duration is a numerical variable, we use the absolute mean difference of power outage duration when power outage cause is and is not missing as our test statistics.
 
@@ -182,11 +182,11 @@ From the permutation test, we fail to reject the null hypothesis because 0.089 i
 
 <br>
 
-** Power Outage Cause and Total Customers **
+**Power Outage Cause and Total Customers**
 
-Null Hypothesis: The missingness of the values in CAUSE.CATEGORY.DETAIL does not depend on the values in TOTAL.CUSTOMERS
+**Null Hypothesis:** The missingness of the values in CAUSE.CATEGORY.DETAIL does not depend on the values in TOTAL.CUSTOMERS
 
-Alternative Hypothesis: The missingness of the values in CAUSE.CATEGORY.DETAIL does depend on the values in TOTAL.CUSTOMERS
+**Alternative Hypothesis:** The missingness of the values in CAUSE.CATEGORY.DETAIL does depend on the values in TOTAL.CUSTOMERS
 
 We created a new column representing the missingness of power outage cause for each row, and shuffled this column for permutation. Because total customers is a numerical variable, we use the absolute mean difference of total customers when power outage cause is and is not missing as our test statistics.
 
@@ -419,12 +419,14 @@ p_value_dep
 0.0
 
 From the permutation test above, we reject null hypothesis because 0.0 is less than the 0.05 pre-defined cutoff value. Thus, the missingness of 'CAUSE.CATEGORY.DETAIL' is MAR, dependent on 'TOTAL.CUSTOMERS'.
+
 ---
 
 ## Hypothesis Testing
-Null Hypothesis: The distribution of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from the same distribution and any observed difference is due to random chance
 
-Alternative Hypothesis: The distributions of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from different population distributions
+**Null Hypothesis:** The distribution of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from the same distribution and any observed difference is due to random chance
+
+**Alternative Hypothesis:** The distributions of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from different population distributions
 
 ```py
 temp = outages[['CAUSE.CATEGORY', 'OUTAGE.DURATION']].copy()
@@ -478,11 +480,13 @@ p_value_dep
 0.0
 
 We can see that our observed statistic falls far from distribution of test statistics, meaning that we reject the null hypothesis in favor of the alternative hypothesis. In other words, the permutation test suggests that the cause of 'severe weather' and 'intentional attack' are not drawn from the same underlying population distribution.
+
 ---
 
 ## Framing our Prediction Problem
 
 Our goal for the second part of this project is to build off the knowledge we gained from our exploratory data analysis earlier to predict the duration of power outage events in the future. We plan to do this by using present features such as population, type of outage, geographical information, and information about the state to base our linear regression model off of. We believe this is critical for public safety, supporting vulnerable populations, and mitigating economic impact.
+
 ---
 
 ## Baseline Model
@@ -508,13 +512,13 @@ After fitting the model, we obtain our regression results. The R-squared, as kno
 In the basic model, we chose the 3 features - TOTAL.CUSTOMERS, CAUSE.CATEGORY, and YEAR - by judgment, but those may have not been the most effective, as shown in the low R-squared of the basic model’s results. To find better combinations of features to predict duration of outages better, we use cross validation, a process by which we divide the training set even more to essentially test the training set before the best training set is compared with the testing set. For more specifics, check out k-fold cross validation.
 
 Using cross validation, we choose between 7 combinations of features
-TOTAL.CUSTOMERS, CAUSE.CATEGORY, MONTH
-ANOMALY.LEVEL, TOTAL.CUSTOMERS
-ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE
-ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES
-ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, CAUSE.CATEGORY
-ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, CUSTOMERS.AFFECTED, PCT_WATER_TOT, CAUSE.CATEGORY, CLIMATE.REGION
-ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, YEAR, MONTH, CAUSE.CATEGORY, CLIMATE.REGION
+1. TOTAL.CUSTOMERS, CAUSE.CATEGORY, MONTH
+2. ANOMALY.LEVEL, TOTAL.CUSTOMERS
+3. ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE
+4. ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES
+5. ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, CAUSE.CATEGORY
+6. ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, CUSTOMERS.AFFECTED, PCT_WATER_TOT, CAUSE.CATEGORY, CLIMATE.REGION
+7. ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, YEAR, MONTH, CAUSE.CATEGORY, CLIMATE.REGION
 
 After performing k-fold cross validation with 5 folds, we obtain the following table.
 | Validation Fold | sample_1  | sample_2  | sample_3  | sample_4  | sample_5  | sample_6  | sample_7  |
@@ -548,13 +552,13 @@ The final model performance reports a R-squared of 0.29 for the training set, an
 
 After building our model, it is essential to scrutinize it not only in efficacy but also fairness, that is, does our model perform equally well for individuals between two different groups. This process of rapid iteration and testing is so that we have confidence that our model is representative of the world from which it tries to understand. We decided to divide the groups between the West Climate Region of the United States, one-hot-encoded as True, including Northwest, Southwest, West, amd West North Central, and the East Climate Region, one-hot-encoded as False, including East North Central, Central, South, Southeast, and Northeast. In short, we’re comparing the West Coast and the rest of America.
 
-Null Hypothesis: Our model is fair. The root mean squared error (RMSE) for the west climate region and east climate region are roughly the same, and any differences are due to random chance.  
+**Null Hypothesis:** Our model is fair. The root mean squared error (RMSE) for the west climate region and east climate region are roughly the same, and any differences are due to random chance.  
 
-Alternative Hypothesis: Our model is unfair. The root mean squared error (RMSE) for the east climate region is lower than its precision for the west climate region.
+**Alternative Hypothesis:** Our model is unfair. The root mean squared error (RMSE) for the east climate region is lower than its precision for the west climate region.
 
-Test Statistics: We chose to compare the difference in root mean squared error between the two models to compare two numerical distributions which describe the effectiveness of our model between the two regions, keeping it as the signed difference in RMSE ensures our ability to discern whether the model is less effective for the east climate region than for the west.
+**Test Statistics:** We chose to compare the difference in root mean squared error between the two models to compare two numerical distributions which describe the effectiveness of our model between the two regions, keeping it as the signed difference in RMSE ensures our ability to discern whether the model is less effective for the east climate region than for the west.
 
-Significance Level: Following permutation testing, we decided to use a significance level of 5%.
+**Significance Level:** Following permutation testing, we decided to use a significance level of 5%.
 
 The figure above demonstrates the empirical distribution of test statistics over 500 permutations, with the red line representing the observed statistic of -23.89. We ultimately calculate a p–value of 0.16, greater than the p-value of 0.05, which leads us to conclude that we fail to reject the null hypothesis, and have no significant evidence that the root mean square error between the East and West regions are different. Thus, our fairness test suggests that our model is fair, with any differences being attributed to random chance.
 
