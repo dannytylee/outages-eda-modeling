@@ -16,7 +16,7 @@ Our goal for the first section of this project is to investigate the underlying 
 
 The data set we are using has 1534 rows, each representing a major outage in the continental United States from January 2000 to July 2016, and 54 feature columns. Here are a few important ones:
 
-| Columns                 | Description  |
+| Column                  | Description  |
 |:------------------------|:-------|
 | YEAR                    | Indicates the year when the outage event occurred |
 | MONTH                   | Indicates the month when the outage event occurred |
