@@ -40,6 +40,74 @@ In our study, we primarily used 5 columns: CLIMATE.REGION , ANOMALY.LEVEL, CLIMA
 ### Data Cleaning
 
 In order to increase the readability and accuracy of our data, we followed the following steps to clean our DataFrame:
+1. <b>Dropping unnecessary rows and columns:</b> When we first retrieved the dataset, the columns and indices were mispositioned in the dataframe. We addressed this issue by dropping three rows and one column in order to relocate the column names top of the dataframe and the indices to the left most side of the dataframe.
+2. <b>Converting columns to proper dtypes:</b> This step is to make the time column more accurate and accessible. We converted OUTAGE.START.DATE, OUTAGE.START.TIME, OUTAGE.RESTORATION.DATE and OUTAGE.RESTORATION.TIME columns into datetime64[ns] dtype.
+3. <b>Converting percentages to proportions:</b> This step allows for arithmetic operations and enhanced interpretability during data analysis. Proportions rid the need of percentage symbols which are difficult to work with when manipulating data and performing conversions.
+4. <b>Combining two columns into one:</b> This step combines OUTAGE.START.DATE and OUTAGE.START.TIME into OUTAGE.START, and OUTAGE.END.DATE and OUTAGE.END.TIME into OUTAGE.RESTORATION. This is important because it reduces the size of the dataframe for efficiency, simplicity, and easy access to both the date and time.
+
+**After cleaning the data, the columns now look like this**
+
+Previously all columns were dtype objects, now
+
+| Column                | Dtype          |
+|:----------------------|:---------------|
+| OBS                   | object         |
+| YEAR                  | object         |
+| MONTH                 | object         |
+| U.S._STATE            | object         |
+| POSTAL.CODE           | object         |
+| NERC.REGION           | object         |
+| CLIMATE.REGION        | object         |
+| ANOMALY.LEVEL         | object         |
+| CLIMATE.CATEGORY      | object         |
+| CAUSE.CATEGORY        | object         |
+| CAUSE.CATEGORY.DETAIL | object         |
+| HURRICANE.NAMES       | object         |
+| OUTAGE.DURATION       | float64        |
+| DEMAND.LOSS.MW        | object         |
+| CUSTOMERS.AFFECTED    | object         |
+| RES.PRICE             | object         |
+| COM.PRICE             | object         |
+| IND.PRICE             | object         |
+| TOTAL.PRICE           | object         |
+| RES.SALES             | object         |
+| COM.SALES             | object         |
+| IND.SALES             | object         |
+| TOTAL.SALES           | object         |
+| RES.PERCEN            | float64        |
+| COM.PERCEN            | float64        |
+| IND.PERCEN            | float64        |
+| RES.CUSTOMERS         | object         |
+| COM.CUSTOMERS         | object         |
+| IND.CUSTOMERS         | object         |
+| TOTAL.CUSTOMERS       | object         |
+| RES.CUST.PCT          | float64        |
+| COM.CUST.PCT          | float64        |
+| IND.CUST.PCT          | float64        |
+| PC.REALGSP.STATE      | object         |
+| PC.REALGSP.USA        | object         |
+| PC.REALGSP.REL        | object         |
+| PC.REALGSP.CHANGE     | float64        |
+| UTIL.REALGSP          | object         |
+| TOTAL.REALGSP         | object         |
+| UTIL.CONTRI           | float64        |
+| PI.UTIL.OFUSA         | float64        |
+| POPULATION            | object         |
+| POPPCT_URBAN          | float64        |
+| POPPCT_UC             | float64        |
+| POPDEN_URBAN          | object         |
+| POPDEN_UC             | object         |
+| POPDEN_RURAL          | object         |
+| AREAPCT_URBAN         | float64        |
+| AREAPCT_UC            | float64        |
+| PCT_LAND              | float64        |
+| PCT_WATER_TOT         | float64        |
+| PCT_WATER_INLAND      | float64        |
+| OUTAGE.START          | datetime64[ns] |
+| OUTAGE.RESTORATION    | datetime64[ns] |
+
+
+
 
 
 <iframe
