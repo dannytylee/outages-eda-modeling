@@ -12,66 +12,22 @@ Our lives are becoming increasingly exposed to the far reaching effects of clima
 
 Our goal for the first section of this project is to investigate the underlying climate trends over time and geographical patterns to develop a better understanding about power outage risks. To be more specific, <b>how do variables like the number of customers affected by power outage events, changing climate, and geographical position of states contribute to the risk of potential power outages and their duration?</b> We believe that this knowledge is critical for enhancing public safety, supporting vulnerable populations, and mitigating environmental impacts.
 
-The data set we are using has 1534 rows, each representing a major outage in the continental United States from January 2000 to July 2016, and 54 columns representing:
+The data set we are using has 1534 rows, each representing a major outage in the continental United States from January 2000 to July 2016, and 54 feature columns. Here are a few important ones:
 
-| Columns                 | dtype  |
+| Columns                 | Description  |
 |:------------------------|:-------|
-| OBS                     | object |
-| YEAR                    | object |
-| MONTH                   | object |
-| U.S._STATE              | object |
-| POSTAL.CODE             | object |
-| NERC.REGION             | object |
-| CLIMATE.REGION          | object |
-| ANOMALY.LEVEL           | object |
-| CLIMATE.CATEGORY        | object |
-| OUTAGE.START.DATE       | object |
-| OUTAGE.START.TIME       | object |
-| OUTAGE.RESTORATION.DATE | object |
-| OUTAGE.RESTORATION.TIME | object |
-| CAUSE.CATEGORY          | object |
-| CAUSE.CATEGORY.DETAIL   | object |
-| HURRICANE.NAMES         | object |
-| OUTAGE.DURATION         | object |
-| DEMAND.LOSS.MW          | object |
-| CUSTOMERS.AFFECTED      | object |
-| RES.PRICE               | object |
-| COM.PRICE               | object |
-| IND.PRICE               | object |
-| TOTAL.PRICE             | object |
-| RES.SALES               | object |
-| COM.SALES               | object |
-| IND.SALES               | object |
-| TOTAL.SALES             | object |
-| RES.PERCEN              | object |
-| COM.PERCEN              | object |
-| IND.PERCEN              | object |
-| RES.CUSTOMERS           | object |
-| COM.CUSTOMERS           | object |
-| IND.CUSTOMERS           | object |
-| TOTAL.CUSTOMERS         | object |
-| RES.CUST.PCT            | object |
-| COM.CUST.PCT            | object |
-| IND.CUST.PCT            | object |
-| PC.REALGSP.STATE        | object |
-| PC.REALGSP.USA          | object |
-| PC.REALGSP.REL          | object |
-| PC.REALGSP.CHANGE       | object |
-| UTIL.REALGSP            | object |
-| TOTAL.REALGSP           | object |
-| UTIL.CONTRI             | object |
-| PI.UTIL.OFUSA           | object |
-| POPULATION              | object |
-| POPPCT_URBAN            | object |
-| POPPCT_UC               | object |
-| POPDEN_URBAN            | object |
-| POPDEN_UC               | object |
-| POPDEN_RURAL            | object |
-| AREAPCT_URBAN           | object |
-| AREAPCT_UC              | object |
-| PCT_LAND                | object |
-| PCT_WATER_TOT           | object |
-| PCT_WATER_INLAND        | object |
+| YEAR                    | Indicates the year when the outage event occurred |
+| MONTH                   | Indicates the month when the outage event occurred |
+| U.S._STATE              | Represents all the states in the continental U.S. |
+| CLIMATE.REGION          | Nine Climatically Consistent Regions in Continental U.S. |
+| ANOMALY.LEVEL           | Represents the Oceanic El Niño/La Niña Index |
+| CLIMATE.CATEGORY        | Represents the climate episodes corresponding to the years |
+| OUTAGE.DURATION         | Duration of outage events (in minutes) |
+| DEMAND.LOSS.MW          | Amount of peak demand lost during an outage event (in Megawatt) |
+| CUSTOMERS.AFFECTED      | Number of customers affected by the power outage event |
+| TOTAL.CUSTOMERS         | Annual number of total customers served in the U.S. state |
+| POPULATION              | Population in the U.S. state per year |
+
 
 
 
