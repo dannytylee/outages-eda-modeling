@@ -78,9 +78,15 @@ Previously all columns were dtype objects, the latter half of the dataframe now 
 | OUTAGE.START          | datetime64[ns] |
 | OUTAGE.RESTORATION    | datetime64[ns] |
 
+<br>
 
+### Univariate Analysis
 
+**Distribution of Power Outages**
 
+The histogram below shows the frequency of power outages for each U.S. state from 2000 to 2016 in our dataset.
+
+In this histogram, we notice that California has the highest number of power outages, trailed by Texas, Michigan, and Washington. Conversely, Alaska, South Dekota and North Dekota rarely experience any outages. This may suggest that there is a correlation between the state’s population and the number of power outages experienced.
 
 <iframe
   src="assets/univariate_1.html"
@@ -90,7 +96,9 @@ Previously all columns were dtype objects, the latter half of the dataframe now 
 ></iframe>
 
 
+The histogram below shows the frequency of power outages for each U.S. state from 2000 to 2016 in our dataset.
 
+In this histogram, we are immediately drawn to the spike in outages during the year of 2011 at 209 power outages. However, the years prior and after experienced no more than 174 outages. While there is a decline in power outages after 2011, the distribution is skewed right. This may suggest that the number of outages increases over the years from 2000 to 2016.
 
 <iframe
   src="assets/univariate_2.html"
