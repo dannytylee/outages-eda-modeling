@@ -204,7 +204,7 @@ From the permutation test, we reject the null hypothesis because 0.0 is less tha
 
 ## Hypothesis Testing
 
-**Severe weather' and Intentional attack**
+**Severe weather and Intentional attack**
 
 Null Hypothesis: The distribution of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from the same distribution and any observed difference is due to random chance
 
