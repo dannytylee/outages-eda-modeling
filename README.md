@@ -207,14 +207,15 @@ From the permutation test, we reject the null hypothesis because 0.0 is less tha
 
 ## Hypothesis Testing
 
-**Severe weather and Intentional attack**
+**Cause Category and Outage Duration**
 
-Null Hypothesis: The distribution of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from the same distribution and any observed difference is due to random chance
+**Null Hypothesis**: The distribution of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from the same distribution and any observed difference is due to random chance
 
-Alternative Hypothesis: The distributions of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from different population distributions
+**Alternative Hypothesis<**: The distributions of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from different population distributions
 
+We created a new column representing the missingness of power outage cause for each row, and shuffled this column for permutation. Because outage duration is a numerical variable, we use the absolute mean difference of outage duration when power outage cause is and is not missing as our test statistics.
 
-Significance Level: To ensure the accuracy of our conclusion on whether sereve weather adn intentional attacks come from the same distribution, we decided to use the conventional significance level of 5%
+**Significance Level:** To ensure the accuracy of our conclusion on whether sereve weather adn intentional attacks come from the same distribution, we decided to use the conventional significance level of 5%
 
 Below shows the empirical distribution of our test statistics with 1000 permutations, the vertical red line marks the observed test statistic and the vertical purple line marks the critical value.
 
@@ -225,7 +226,7 @@ Below shows the empirical distribution of our test statistics with 1000 permutat
   frameborder="0"
 ></iframe>
 
-We can see that our observed statistic falls far from distribution of test statistics, meaning that we reject the null hypothesis in favor of the alternative hypothesis. In other words, the permutation test suggests that the cause of 'severe weather' and 'intentional attack' are not drawn from the same underlying population distribution.
+**Conclusion:** We can see that our observed statistic falls far from distribution of test statistics, meaning that we reject the null hypothesis in favor of the alternative hypothesis. In other words, the permutation test suggests that the cause of 'severe weather' and 'intentional attack' are not drawn from the same underlying population distribution.
 
 ---
 
