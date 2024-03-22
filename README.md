@@ -157,6 +157,10 @@ Additional research shows, "Tropical cyclones, storms with high winds that origi
 
 ### NMAR Analysis
 
+NMAR is the term that describes a situation where the chance that a value is missing depends on the actual missing value itself. In the power outages dataframe, the missingness of HURRICANE.NAMES is likely to be NMAR because the severity of the hurricane determines whether the names are recorded or not. Knowing that only notable hurricanes receive names, hurricanes with missing name values may not have been severe enough. Thus, the missingness of name values can be attributed to the hurricane itself. If we want to transform HURRICANE.NAMES into MAR, we could add a severity column that tells you the category of each hurricane.
+
+### Missingness Dependency
+
 
 
 
