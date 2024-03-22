@@ -481,396 +481,85 @@ We can see that our observed statistic falls far from distribution of test stati
 ---
 
 ## Framing our Prediction Problem
+
 Our goal for the second part of this project is to build off the knowledge we gained from our exploratory data analysis earlier to predict the duration of power outage events in the future. We plan to do this by using present features such as population, type of outage, geographical information, and information about the state to base our linear regression model off of. We believe this is critical for public safety, supporting vulnerable populations, and mitigating economic impact.
 ---
 
 ## Baseline Model
+
+Recall basic science experiments, most science teachers in the US teach the concept of independent and dependent variables, where the independent variable has some kind of effect on the dependent variable. In this prediction problem, our dependent variable is the duration of power outages, and our independent variable is now one of many features, any of which could be a factor that helps us predict outage durations better. These features were split between numerical and categorical variables. For example, CUSTOMERS.AFFECTED is a numerical variable because it is a number that we can perform orders of operations on. By that idea, features like CLIMATE.REGION are categorical variables. There are more complex situations like MONTH, which can be represented in a numerical form, but we characterized those as categorical variables, because we intend to see if different months of the year have an effect on outage durations. A full list of features can be found below.
+
 ```py
 num_features = ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE', 'TOTAL.SALES', 'CUSTOMERS.AFFECTED', 'PCT_WATER_TOT']
 cat_features = ['YEAR', 'MONTH', 'CAUSE.CATEGORY', 'CLIMATE.REGION']
 predictor = ['OUTAGE.DURATION']
 ```
 
-```py
-model_outages = outages[cat_features + num_features + predictor].copy()
-model_outages = model_outages.dropna()
+By aggregating these features into one large dataset, we obtain our training and testing sets to build our linear regression model. There are a couple concepts here that may need to be explained. First, we separate the dataset into training and testing sets to ensure that our model’s performance can be generalized to data beyond what it was trained on. This split between the training and testing set is arbitrary, but we chose a 80:20 ratio. Linear regression is the core idea of the prediction problem, where we intend to find the line of best fit based on the features we give it. Think of a scatter plot on the XY-plane, but now there’s multiple x’s. This results in a n-dimensional coordinate plane, where n is the number of features, which we cannot physically visualize, but becomes more intuitive as you imagine how the regression changes from 2D to 3D.
 
-true_predictions = model_outages['OUTAGE.DURATION']
-model_outages = model_outages.drop(columns = ['OUTAGE.DURATION'])
-```
+Using scikit-learn, a Python-based machine learning library, we transform our data in preparation for creating our basic model for linear regression, which includes only 1 numerical feature - TOTAL.CUSTOMERS - and 2 categorical features - CAUSE.CATEGORY and YEAR. The numerical feature was standardized (see z-scores), and the categorical features one-hot-encoded. That is, each unique value within those features becomes a new feature, where its values are 1 if the value at that original position was the same as the unique value that are these new features, and 0 if it is not. Let’s say the CAUSE.CATEGORY feature had 3 unique values - ‘severe weather’, ‘intentional attack’, and ‘system failure’, once we one-hot-encode the CAUSE.CATEGORY feature, we would have three new features in the format of or similar to ‘is_severe_weather’, ‘is_intentional_attack’, ‘is_system_failure’.
 
-```py
-X = model_outages
-y = true_predictions
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=50)
-```
-
-```py
-preproc_base = ColumnTransformer(
-    transformers=[
-        ('standardize', StandardScaler(), ['TOTAL.CUSTOMERS']),
-        ('categorical_cols', OneHotEncoder(drop='first'), ['CAUSE.CATEGORY', 'YEAR'])
-    ],
-    remainder='drop')
-```
-
-```py
-pl_base = Pipeline([
-    ('preprocessor', preproc_base), 
-    ('lin-reg', LinearRegression())
-])
-```
-
-```py
-pl_base.fit(X_train, y_train)
-```
-Pipeline(steps=[('preprocessor',
-                 ColumnTransformer(transformers=[('standardize',
-                                                  StandardScaler(),
-                                                  ['TOTAL.CUSTOMERS']),
-                                                 ('categorical_cols',
-                                                  OneHotEncoder(drop='first'),
-                                                  ['CAUSE.CATEGORY',
-                                                   'YEAR'])])),
-                ('lin-reg', LinearRegression())])
-
-```py
-pl_base.score(X, y)
-```
-0.21480899432369982
-
-
-```py
-train_predicted = pl_base.predict(X_train)
-rmse(y_train, train_predicted)
-```
-61.27683537688739
-
-```py
-pl_base.score(X_test, y_test)
-```
-0.1165678626471397
-
-
-```py
-test_predicted = pl_base.predict(X_test)
-rmse(y_test, test_predicted)
-```
-81.68316868678828
+After fitting the model, we obtain our regression results. The R-squared, as known as the coefficient of determination, is a number from 0-1 that explains how much of the variance of the y is explained by our features X. We obtain a R-squared of 0.25 for our training set, and 0.12 for our testing set. The R-squared of the training set being larger than the testing set is not necessarily a bad thing, as that tells us we are not ‘overfitting’ to the training set, that our model can be generalized to data beyond our training data. The root mean square error (RMSE) measures the average deviation between predicted values and actual values, ranging from 0 to infinity, in the units of the y, in this case, OUTAGE.DURATION is in hours. The RMSE of the training set is 61.28, and the RMSE of the testing set is 81.68, which tells us that our model is off by 61 hours in the training and 82 hours in the testing set. Evidently, more work needs to be done to improve the efficacy of the model.
 
 ---
 
 ## Final Model
-```py
-pipes = {
-    'sample_1': make_pipeline(
-        make_column_transformer(
-            (FunctionTransformer(lambda x: x), ['TOTAL.CUSTOMERS']), # don't need to standardize because perf doesn't change
-            (OneHotEncoder(drop='first', handle_unknown='ignore'), ['CAUSE.CATEGORY', 'MONTH']),
-        ),
-        LinearRegression(),
-    ),
-    'sample_2': make_pipeline(
-        make_column_transformer(
-            (FunctionTransformer(lambda x: x), ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS']),
-        ),
-        LinearRegression(),
-    ),
-    'sample_3': make_pipeline(
-        make_column_transformer(
-            (FunctionTransformer(lambda x: x), ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE']),
-        ),
-        LinearRegression(),
-    ),
-    'sample_4': make_pipeline(
-        make_column_transformer(
-            (FunctionTransformer(lambda x: x), ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE', 'TOTAL.SALES']),
-        ),
-        LinearRegression(),
-    ),
-    'sample_5': make_pipeline(
-        make_column_transformer(
-            (FunctionTransformer(lambda x: x), ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE', 'TOTAL.SALES']),
-            (OneHotEncoder(drop='first', handle_unknown='ignore'), ['CAUSE.CATEGORY']),
-        ),
-        LinearRegression(),
-    ),
-    'sample_6': make_pipeline(
-        make_column_transformer(
-            (FunctionTransformer(lambda x: x), ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE', 'TOTAL.SALES', 'CUSTOMERS.AFFECTED', 'PCT_WATER_TOT']),
-            (OneHotEncoder(drop='first', handle_unknown='ignore'), ['CAUSE.CATEGORY', 'CLIMATE.REGION']),
-        ),
-        LinearRegression(),
-    ),
-    'sample_7': make_pipeline(
-        make_column_transformer(
-            (FunctionTransformer(lambda x: x), ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE', 'TOTAL.SALES']),
-            (OneHotEncoder(drop='first', handle_unknown='ignore'), ['YEAR', 'MONTH', 'CAUSE.CATEGORY', 'CLIMATE.REGION']),
-        ),
-        LinearRegression(),
-    ),
-}
-```
 
-```py
-pipe_df = pd.DataFrame()
+In the basic model, we chose the 3 features - TOTAL.CUSTOMERS, CAUSE.CATEGORY, and YEAR - by judgment, but those may have not been the most effective, as shown in the low R-squared of the basic model’s results. To find better combinations of features to predict duration of outages better, we use cross validation, a process by which we divide the training set even more to essentially test the training set before the best training set is compared with the testing set. For more specifics, check out k-fold cross validation.
 
-for pipe in pipes:
-    errs = cross_val_score(pipes[pipe], X_train, y_train,
-                           cv=5, scoring='neg_root_mean_squared_error')
-    pipe_df[pipe] = -errs
-    
-pipe_df.index = [f'Fold {i}' for i in range(1, 6)]
-pipe_df.index.name = 'Validation Fold'
-```
+Using cross validation, we choose between 7 combinations of features
+TOTAL.CUSTOMERS, CAUSE.CATEGORY, MONTH
+ANOMALY.LEVEL, TOTAL.CUSTOMERS
+ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE
+ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES
+ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, CAUSE.CATEGORY
+ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, CUSTOMERS.AFFECTED, PCT_WATER_TOT, CAUSE.CATEGORY, CLIMATE.REGION
+ANOMALY.LEVEL, TOTAL.CUSTOMERS, TOTAL.PRICE, TOTAL.SALES, YEAR, MONTH, CAUSE.CATEGORY, CLIMATE.REGION
 
-```py
-pipe_df
-```
-### TABLE
-
-```py
-pipe_df.mean()
-```
-### OUTPUT
-
-```py
-'Lowest Average Validation RMSE: ' + str(pipe_df.mean().idxmin())
-```
-'Lowest Average Validation RMSE: sample_6'
+After performing k-fold cross validation with 5 folds, we obtain the following table.
+| Validation Fold | sample_1  | sample_2  | sample_3  | sample_4  | sample_5  | sample_6  | sample_7  |
+|-----------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| Fold 1      	| 63.231110 | 63.098073 | 63.134034 | 63.092402 | 71.345084 | 72.005555 | 63.192334 |
+| Fold 2      	| 54.167529 | 54.608197 | 54.698204 | 54.874145 | 49.871620 | 45.008102 | 54.350286 |
+| Fold 3      	| 80.416242 | 80.640858 | 81.418273 | 81.591553 | 72.733141 | 72.657506 | 80.893216 |
+| Fold 4      	| 79.489611 | 79.683935 | 79.820178 | 79.871914 | 68.978334 | 72.351689 | 79.660000 |
+| Fold 5      	| 73.959864 | 74.351174 | 74.225691 | 74.259999 | 70.401243 | 64.150105 | 73.927456 |
 
 
-```py
-errs_df = pd.DataFrame()
 
-for d in range(1, 11):
-    pl = make_pipeline(PolynomialFeatures(d), LinearRegression())
-    X = X_train[['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE', 
-                 'TOTAL.SALES', 'CUSTOMERS.AFFECTED', 'PCT_WATER_TOT']]
-    y = y_train
-   
-    errs = cross_val_score(pl, X, y, cv=5, scoring='neg_root_mean_squared_error') # 5-Fold Cross Validation
-    errs_df[f'Deg {d}'] = -errs # errs = negative RMSE
-    
-errs_df.index = [f'Fold {i}' for i in range(1, 6)]
-errs_df.index.name = 'Validation Fold'
-```
+The average validation RMSE between the 5 folds is below. As you can see, sample_6 has the 
+| Sample   | Value 	|
+|----------|-----------|
+| sample_1 | 70.252871 |
+| sample_2 | 70.476447 |
+| sample_3 | 70.659276 |
+| sample_4 | 70.737376 |
+| sample_5 | 66.665885 |
+| sample_6 | 65.234591 |
+| sample_7 | 70.422838 |
 
-```py
-errs_df
-```
-### TABLE
+WRITE. As I previously mentioned, linear regression can be n-dimensional. Hyperparameter. Degree 1.
 
-```py
-errs_df.mean(axis=0)
-```
-Deg 1         67.860227
-Deg 2         89.791544
-Deg 3        120.551792
-Deg 4        822.983713
-Deg 5       1861.478560
-Deg 6       4099.196760
-Deg 7      10326.678933
-Deg 8     117226.136721
-Deg 9     156230.284096
-Deg 10     85205.598474
-dtype: float64
+The final model performance reports a R-squared of 0.29 for the training set, and 0.14 for the testing set. The RMSE for the training set is 59.48, and the RMSE for the testing set is 80.49. Overall, using cross validation allowed us to improve our model’s performance by around 120%.
 
-```py
-'Lowest Testing Error Degree: ' + str(errs_df.mean(axis=0).idxmin())
-```
-'Lowest Testing Error Degree: Deg 1'
-
-```py
-preproc = ColumnTransformer(
-    transformers=[
-        ('quantile', QuantileTransformer(n_quantiles = 100), ['TOTAL.SALES', 'CUSTOMERS.AFFECTED', 
-                                                              'TOTAL.CUSTOMERS', 'TOTAL.PRICE']),
-        
-        ('standardize', StandardScaler(), ['ANOMALY.LEVEL', 'PCT_WATER_TOT']),
-        
-        ('categorical_cols', OneHotEncoder(drop='first', handle_unknown='ignore'), ['CAUSE.CATEGORY', 'CLIMATE.REGION']),
-        
-        ('poly', PolynomialFeatures(degree = 1), ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 
-                                                  'TOTAL.PRICE', 'TOTAL.SALES', 
-                                                  'CUSTOMERS.AFFECTED', 'PCT_WATER_TOT']),
-    ],
-    remainder='passthrough')
-```
-Why QuantileTransformer for 'TOTAL.SALES' and 'TOTAL.CUSTOMERS'?
-
-Because the numbers are so large on both features, QuantileTransformer can be useful for reducing the impact of outliers, especially linear models. Additionally, we wanted all features on a similar scale so that the coefficients are more interpretable.
-
-
-```py
-pl = Pipeline([
-    ('preprocessor', preproc), 
-    ('lin-reg', LinearRegression())
-])
-```
-
-```py
-pl.fit(X_train, y_train)
-```
-Pipeline(steps=[('preprocessor',
-                 ColumnTransformer(remainder='passthrough',
-                                   transformers=[('quantile',
-                                                  QuantileTransformer(n_quantiles=100),
-                                                  ['TOTAL.SALES',
-                                                   'CUSTOMERS.AFFECTED',
-                                                   'TOTAL.CUSTOMERS',
-                                                   'TOTAL.PRICE']),
-                                                 ('standardize',
-                                                  StandardScaler(),
-                                                  ['ANOMALY.LEVEL',
-                                                   'PCT_WATER_TOT']),
-                                                 ('categorical_cols',
-                                                  OneHotEncoder(drop='first',
-                                                                handle_unknown='ignore'),
-                                                  ['CAUSE.CATEGORY',
-                                                   'CLIMATE.REGION']),
-                                                 ('poly',
-                                                  PolynomialFeatures(degree=1),
-                                                  ['ANOMALY.LEVEL',
-                                                   'TOTAL.CUSTOMERS',
-                                                   'TOTAL.PRICE', 'TOTAL.SALES',
-                                                   'CUSTOMERS.AFFECTED',
-                                                   'PCT_WATER_TOT'])])),
-                ('lin-reg', LinearRegression())])
-
-**Baseline Model Performance**
-
-```py
-pl_base.score(X_train, y_train)
-```
-0.2511739088911349
-
-```py
-train_predicted = pl_base.predict(X_train)
-rmse(y_train, train_predicted)
-```
-61.27683537688739
-
-```py
-pl_base.score(X_test, y_test)
-```
-0.1165678626471397
-
-```py
-test_predicted = pl_base.predict(X_test)
-rmse(y_test, test_predicted)
-```
-81.68316868678828
-
-**Final Model Performance**
-
-```py
-pl.score(X_train, y_train)
-```
-0.2945144443242381
-
-```py
-rmse(y_train, pl.predict(X_train))
-```
-59.47711676851063
-
-```py
-pl.score(X_test, y_test)
-```
-0.14209170863605658
-
-```py
-rmse(y_test, pl.predict(X_test))
-```
-80.49453804992676
 ---
 
 ## Fairness Analysis
-Let our two climate region groups be
 
-<b>West Climate Region of the United States<b> (True):
-- Northwest
-- Southwest
-- West
-- West North Central
+After building our model, it is essential to scrutinize it not only in efficacy but also fairness, that is, does our model perform equally well for individuals between two different groups. This process of rapid iteration and testing is so that we have confidence that our model is representative of the world from which it tries to understand. We decided to divide the groups between the West Climate Region of the United States, one-hot-encoded as True, including Northwest, Southwest, West, amd West North Central, and the East Climate Region, one-hot-encoded as False, including East North Central, Central, South, Southeast, and Northeast. In short, we’re comparing the West Coast and the rest of America.
 
-<b>East Climate Region of the United States<b> (False):
-- East North Central
-- Central
-- South
-- Southeast
-- Northeast
+Null Hypothesis: Our model is fair. The root mean squared error (RMSE) for the west climate region and east climate region are roughly the same, and any differences are due to random chance.  
 
-Null Hypothesis: Our model is fair. Its RMSE for the west climate region and east climate region are roughly the same, and any differences are due to random chance.
+Alternative Hypothesis: Our model is unfair. The root mean squared error (RMSE) for the east climate region is lower than its precision for the west climate region.
 
-Alternative Hypothesis: Our model is unfair. Its RMSE for the east climate region is lower than its precision for the west climate region.
+Test Statistics: We chose to compare the difference in root mean squared error between the two models to compare two numerical distributions which describe the effectiveness of our model between the two regions, keeping it as the signed difference in RMSE ensures our ability to discern whether the model is less effective for the east climate region than for the west.
 
-```py
-def model_RMSE(df, pipeline):
-    features = ['ANOMALY.LEVEL', 'TOTAL.CUSTOMERS', 'TOTAL.PRICE', 'OUTAGE.DURATION',
-                'TOTAL.SALES', 'CUSTOMERS.AFFECTED', 'PCT_WATER_TOT', 'CAUSE.CATEGORY', 'CLIMATE.REGION']
-    
-    df = df[features].dropna()
-    X = df.drop(columns=['OUTAGE.DURATION'])
-    y = df['OUTAGE.DURATION'].copy()
-    
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    pipeline.fit(X_train, y_train)
-    y_pred = pipeline.predict(X_test)
-    
-    rmse_value = rmse(y_pred, y_test)
-    return rmse_value
-```
+Significance Level: Following permutation testing, we decided to use a significance level of 5%.
 
-```py
-west = ['Northwest' ,'Southwest', 'West', 'West North Central']
-east = ['East North Central', 'Central', 'South', 'Southeast', 'Northeast']
-fairness_df = outages.copy()
-fairness_df['CLIMATE.REGION'] = fairness_df['CLIMATE.REGION'].transform(lambda row: True if row in west else False)
-```
+The figure above demonstrates the empirical distribution of test statistics over 500 permutations, with the red line representing the observed statistic of -23.89. We ultimately calculate a p–value of 0.16, greater than the p-value of 0.05, which leads us to conclude that we fail to reject the null hypothesis, and have no significant evidence that the root mean square error between the East and West regions are different. Thus, our fairness test suggests that our model is fair, with any differences being attributed to random chance.
 
-```py
-obser_stat = fairness_df.groupby('CLIMATE.REGION').agg(model_RMSE, pl)['OBS']
-obser_stat = obser_stat.diff().iloc[-1]
-obser_stat
-```
--23.88935579176754
+---
 
-```py
-n_repetitions = 500
-differences = []
+## Conclusion
 
-for _ in range(n_repetitions):
-    
-    with_shuffled = fairness_df.assign(Shuffled_Col=np.random.permutation(fairness_df['CLIMATE.REGION']))
-    
-    group_means = (
-        with_shuffled
-        .groupby('Shuffled_Col')
-        .agg(model_RMSE, pl)
-        ['OBS']
-    )
-    
-    difference = group_means.diff().iloc[-1]
-    differences.append(difference)
-```
-
-```py
-fig = px.histogram(pd.DataFrame(differences), x=0, nbins=50, histnorm='probability', 
-                   title='Empirical Distribution of Test Statistic')
-fig.add_vline(x=obser_stat, line_color='red')
-fig.show()
-```
-### PLOT
-
-```py
-p_value_fair = (obser_stat >= np.array(differences)).mean()
-p_value_fair
-```
-0.16
-
-```py
-In conclusion, we fail to reject null hypothesis because 0.16 is greater than the 0.05 pre-defined cutoff value. Thus, the permutation test suggests that our model is fair, and any differences are due to random chance.
-```
+WRITE
