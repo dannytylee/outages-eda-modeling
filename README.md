@@ -153,6 +153,9 @@ A pivot table is show below. According to the pivot table, it is apparent that t
 
 Additional research shows, "Tropical cyclones, storms with high winds that originate over tropical oceans, make a power outage 14 times more likely. And a tropical cyclone with heavy precipitation on a hot day—like the hurricanes that each fall hit the Gulf Coast? They make power outages 52 times more likely" [(source)](https://deohs.washington.edu/hsm-blog/these-four-regions-us-are-hardest-hit-power-outages). This article's findings are consistent with the pivot table and boxplot seen above.
 
+
+---
+
 ## Assessment of Missingness
 
 ### NMAR Analysis
@@ -181,7 +184,6 @@ Below shows the empirical distribution of our test statistics with 1000 permutat
 From the permutation test, we fail to reject the null hypothesis because 0.089 is greater than the 0.05 pre-defined cutoff value. Thus, the missingness of CAUSE.CATEGORY.DETAIL is MCAR.
 
 <br>
-
 **Power Outage Cause and Total Customers**
 
 **Null Hypothesis:** The missingness of the values in CAUSE.CATEGORY.DETAIL does not depend on the values in TOTAL.CUSTOMERS
@@ -201,6 +203,7 @@ Below shows the empirical distribution of our test statistics with 1000 permutat
 
 From the permutation test, we reject the null hypothesis because 0.0 is less than the 0.05 pre-defined cutoff value. Thus, the missingness of CAUSE.CATEGORY.DETAIL is MAR, dependent on TOTAL.CUSTOMERS.
 
+---
 
 ## Hypothesis Testing
 
@@ -218,286 +221,6 @@ Alternative Hypothesis: The distributions of outage duration with cause of 'seve
   height="600"
   frameborder="0"
 ></iframe>
-
-
-**Data Cleaning**
-```py
-# Removes three unnecessary rows above column names and unnecessary columns
-messy_outages.columns = messy_outages.iloc[4].to_list()
-outages = messy_outages.iloc[6:].drop(columns = ['variables']).reset_index(drop=True)
-```
-
-```py
-# Removes three unnecessary rows above column names and unnecessary columns
-messy_outages.columns = messy_outages.iloc[4].to_list()
-outages = messy_outages.iloc[6:].drop(columns = ['variables']).reset_index(drop=True)
-```
-
-```py
-outages.dtypes
-```
-
-### OUTPUT
-
-```py
-# Combines 'OUTAGE.START.DATE' and 'OUTAGE.START.TIME' into a new pd.Timestamp column called 'OUTAGE.START'
-start_date = pd.to_datetime(outages['OUTAGE.START.DATE'])
-start_time = pd.to_datetime(outages['OUTAGE.START.TIME'], format = '%H:%M:%S')
-combined_start = start_date + pd.to_timedelta(start_time.dt.strftime('%H:%M:%S'))
-outages['OUTAGE.START'] = combined_start
-
-# Combines 'OUTAGE.RESTORATION.DATE' and 'OUTAGE.RESTORATION.TIME' into a new pd.Timestamp column called 'OUTAGE.RESTORATION'
-end_date = pd.to_datetime(outages['OUTAGE.RESTORATION.DATE'])
-end_time = pd.to_datetime(outages['OUTAGE.RESTORATION.TIME'], format = '%H:%M:%S')
-combined_end = end_date + pd.to_timedelta(end_time.dt.strftime('%H:%M:%S'))
-outages['OUTAGE.RESTORATION'] = combined_end
-
-outages.drop(['OUTAGE.START.DATE',
-              'OUTAGE.START.TIME', 
-              'OUTAGE.RESTORATION.DATE', 
-              'OUTAGE.RESTORATION.TIME'], axis=1, inplace=True)
-```
-
-```py
-# Converts 'OUTAGE.DURATION' from minutes to hours for clarity and simplification
-outages['OUTAGE.DURATION'] = outages['OUTAGE.DURATION'].transform(lambda row: (row / 60).astype('float64'))
-```
-
-```py
-# Turns percents into proportions
-cols_with_percents = ['RES.PERCEN', 'COM.PERCEN', 'IND.PERCEN', 'RES.CUST.PCT', 'COM.CUST.PCT', 'IND.CUST.PCT', 
-                      'PC.REALGSP.CHANGE', 'UTIL.CONTRI', 'PI.UTIL.OFUSA', 'POPPCT_URBAN', 'POPPCT_UC', 'AREAPCT_URBAN',
-                      'AREAPCT_UC', 'PCT_LAND', 'PCT_WATER_TOT', 'PCT_WATER_INLAND']
-
-for col in cols_with_percents:
-    outages[col] = outages[col].transform(lambda row: (row / 100).astype('float64'))
-```
-
-```py
-outages.dtypes
-```
-
-### OUTPUT
-
-```py
-outages
-```
-
-### TABLE
-
-**Univariate Analysis**
-
-```py
-fig_1 = px.histogram(data_frame=outages, x="U.S._STATE")
-fig_1.update_layout(title='Distribution of Power Outages by State')
-fig_1.update_layout(xaxis_title='U.S. State')
-fig_1.update_layout(yaxis_title='Power Outage Counts')
-fig_1.update_layout(xaxis_tickangle=-45)
-fig_1.show()
-```
-
-### PLOT
-
-```py
-fig_2 = px.histogram(data_frame=outages, x="YEAR", nbins=17) # CAUSE.CATEGORY might be interesting as well
-fig_2.update_layout(title='Distribution of Power Outages by Year')
-fig_2.update_layout(xaxis_title='Year')
-fig_2.update_layout(yaxis_title='Power Outage Counts')
-fig_2.update_traces(marker_color='purple')
-fig_2.show()
-```
-
-### PLOT
-
-**Bivariate Analysis**
-
-```py
-fig_3 = px.scatter(outages, x='YEAR', y='ANOMALY.LEVEL')
-fig_3.update_layout(xaxis_title='Year')
-fig_3.update_layout(yaxis_title='Oceanic Niño Index')
-fig_3.update_layout(title='Distribution of Oceanic Niño Index from 2000 to 2016')
-fig_3.update_traces(marker_color='purple')
-fig_3.show()
-```
-
-### PLOT
-
-```py
-box_plot = outages[outages['CUSTOMERS.AFFECTED'] <= 400000]
-fig_4 = px.box(box_plot, x="CLIMATE.REGION", y="CUSTOMERS.AFFECTED")
-fig_4.update_layout(xaxis_title='Climate Region')
-fig_4.update_layout(yaxis_title='Millions of Customers Affected')
-fig_4.update_layout(title='Distribution of Customers Affected by Climate Region')
-fig_4.show()
-```
-
-### PLOT
-
-**Interesting Aggregates**
-
-A pivot table is show below. According to the pivot table, it is apparent that the Southwest and Northwest climate regions were the least affected by power outages, for many of their columns are filled with zeros to represent 0 hours of power outage during those years. On the other hand, when look at the columns for the South climate region, all the columns are filled with large values. This indicates that the South climate region is one of the most heavily affected by power outages. These findings are consistent with the boxplot seen above.
-
-```py
-pd.pivot_table(outages, values='CUSTOMERS.AFFECTED', index='CLIMATE.REGION', 
-               columns='YEAR', aggfunc='mean', fill_value=0)
-```
-
-### TABLE
-
-
----
-
-## Assessment of Missingness
-```py
-def permutation(df, permute_col, no_permute_col):
-    n_repetitions = 1000
-
-    differences = []
-    for _ in range(n_repetitions):
-        
-        with_shuffled = df.assign(Shuffled_Col=np.random.permutation(df[permute_col]))
-        
-        group_means = (
-            with_shuffled
-            .groupby('Shuffled_Col')
-            [no_permute_col]
-            .mean()
-        )
-        
-        difference = abs(group_means.diff().iloc[-1])
-        differences.append(difference)
-        
-    return differences
-```
-
-**Missingness Dependency**
-Null Hypothesis: The missingness of 'CAUSE.CATEGORY.DETAIL' does not depend on 'OUTAGE.DURATION'
-
-Alternative Hypothesis: The missingness of 'CAUSE.CATEGORY.DETAIL' does depend on 'OUTAGE.DURATION'
-
-```py
-missing_ind = outages[['CAUSE.CATEGORY.DETAIL', 'OUTAGE.DURATION']].copy()
-missing_ind['CAUSE.CATEGORY.DETAIL'] = pd.isna(missing_ind['CAUSE.CATEGORY.DETAIL'])
-
-grouped_means_ind = missing_ind.groupby('CAUSE.CATEGORY.DETAIL')['OUTAGE.DURATION'].mean()
-obs_stat_ind = abs(grouped_means_ind.diff().iloc[-1])
-
-differences_ind = permutation(missing_ind, 'CAUSE.CATEGORY.DETAIL', 'OUTAGE.DURATION')
-```
-
-```py
-fig_ind = px.histogram(
-    pd.DataFrame(differences_ind), x=0, nbins=50, histnorm='probability', 
-    title='Empirical Distribution of Test Statistic')
-fig_ind.update_layout(xaxis_title='Difference in Means')
-fig_ind.add_vline(x=obs_stat_ind, line_color='red')
-fig_ind.show()
-```
-
-### PLOT
-
-```py
-p_value_ind = (obs_stat_ind <= np.array(differences_ind)).mean()
-p_value_ind
-```
-0.071
-
-From the permutation test above, we fail to reject null hypothesis because 0.71 is greater than the 0.05 pre-defined cutoff value. Thus, the missingness of 'CAUSE.CATEGORY.DETAIL' is MCAR.
-
-
-Null Hypothesis: The missingness of 'CAUSE.CATEGORY.DETAIL' does not depend on 'TOTAL.CUSTOMERS'
-
-Alternative Hypothesis: The missingness of 'CAUSE.CATEGORY.DETAIL' does depend on 'TOTAL.CUSTOMERS'
-
-```py
-missing_dep = outages[['CAUSE.CATEGORY.DETAIL', 'TOTAL.CUSTOMERS']].copy()
-missing_dep['CAUSE.CATEGORY.DETAIL'] = pd.isna(missing_dep['CAUSE.CATEGORY.DETAIL'])
-
-grouped_means_dep = missing_dep.groupby('CAUSE.CATEGORY.DETAIL')['TOTAL.CUSTOMERS'].mean()
-obs_stat_dep = abs(grouped_means_dep.diff().iloc[-1])
-
-differences_dep = permutation(missing_dep, 'CAUSE.CATEGORY.DETAIL', 'TOTAL.CUSTOMERS')
-```
-
-```py
-fig_dep = px.histogram(
-    pd.DataFrame(differences_dep), x=0, nbins=50, histnorm='probability', 
-    title='Empirical Distribution of Test Statistic')
-fig_dep.update_layout(xaxis_title='Difference in Means')
-fig_dep.add_vline(x=obs_stat_dep, line_color='red')
-fig_dep.show()
-```
-
-### PLOT
-
-```py
-p_value_dep = (obs_stat_dep <= np.array(differences_dep)).mean()
-p_value_dep
-```
-0.0
-
-From the permutation test above, we reject null hypothesis because 0.0 is less than the 0.05 pre-defined cutoff value. Thus, the missingness of 'CAUSE.CATEGORY.DETAIL' is MAR, dependent on 'TOTAL.CUSTOMERS'.
-
----
-
-## Hypothesis Testing
-
-**Null Hypothesis:** The distribution of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from the same distribution and any observed difference is due to random chance
-
-**Alternative Hypothesis:** The distributions of outage duration with cause of 'severe weather' and 'intentional attack' are drawn from different population distributions
-
-```py
-temp = outages[['CAUSE.CATEGORY', 'OUTAGE.DURATION']].copy()
-temp['OUTAGE.DURATION'] = pd.to_numeric(temp['OUTAGE.DURATION']).fillna(0).sort_values()
-temp = temp[temp['OUTAGE.DURATION'] < 10]
-temp = temp[temp['CAUSE.CATEGORY'].isin(['severe weather', 'intentional attack'])]
-temp
-```
-
-### TABLE
-
-```py
-observed_difference = temp.groupby('CAUSE.CATEGORY')['OUTAGE.DURATION'].mean().diff().iloc[-1]
-observed_difference
-```
-1.9093327843618473
-
-```py
-n_repetitions = 500
-
-differences = []
-for _ in range(n_repetitions):
-    
-    with_shuffled = temp.assign(Shuffled_Duration=np.random.permutation(temp['OUTAGE.DURATION']))
-
-    group_means = (
-        with_shuffled
-        .groupby('CAUSE.CATEGORY')
-        .mean()
-        .loc[:, 'Shuffled_Duration']
-    )
-    difference = group_means.diff().iloc[-1]
-    
-    differences.append(difference)
-```
-
-```py
-fig = px.histogram(pd.DataFrame(differences), x=0, nbins=50, histnorm='probability', 
-                   title='Empirical Distribution of Test Statistic')
-fig.add_vline(x=observed_difference, line_color='red')
-fig.update_layout(xaxis_title='Difference in Means')
-fig.show()
-```
-
-### PLOT
-
-```py
-p_value_hyp = (observed_difference <= np.array(differences)).mean()
-p_value_dep
-```
-0.0
-
-We can see that our observed statistic falls far from distribution of test statistics, meaning that we reject the null hypothesis in favor of the alternative hypothesis. In other words, the permutation test suggests that the cause of 'severe weather' and 'intentional attack' are not drawn from the same underlying population distribution.
 
 ---
 
@@ -586,9 +309,3 @@ After building our model, it is essential to scrutinize it not only in efficacy 
 ></iframe>
 
 The figure above demonstrates the empirical distribution of test statistics over 500 permutations, with the red line representing the observed statistic of -23.89. We ultimately calculate a p–value of 0.16, greater than the p-value of 0.05, which leads us to conclude that we fail to reject the null hypothesis, and have no significant evidence that the root mean square error between the East and West regions are different. Thus, our fairness test suggests that our model is fair, with any differences being attributed to random chance.
-
----
-
-## Conclusion
-
-WRITE
