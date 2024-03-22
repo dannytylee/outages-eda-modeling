@@ -193,7 +193,7 @@ Test Statistic: The absolute difference in means
 Below shows the empirical distribution of our test statistics with 1000 permutations, the vertical red line marks the observed test statistic and the vertical purple line marks the critical value.
 
 <iframe
-  src="assets/missingness_1.html"
+  src="assets/missingness_2.html"
   width="800"
   height="600"
   frameborder="0"
