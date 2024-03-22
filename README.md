@@ -33,8 +33,6 @@ The data set we are using has 1534 rows, each representing a major outage in the
 
 In our study, we primarily used 5 columns: CLIMATE.REGION , ANOMALY.LEVEL, CLIMATE.CATEGORY, DEMAND.LOSS.MW, and POPULATION. We found these columns to be particularly helpful because they represent many of the direct risk characteristics that may contribute to the power outage event itself and the amount of time it takes to restore back the power. Since we are also considering climate variables, many of our exploratory visualizations were conditioned on years from the YEAR column to illustrate trends and patterns over time.
 
-<br>
-<br>
 
 ---
 
@@ -81,10 +79,8 @@ Previously all columns were dtype objects, the latter half of the dataframe now 
 | OUTAGE.START          | datetime64[ns] |
 | OUTAGE.RESTORATION    | datetime64[ns] |
 
-<br>
 
 ### Univariate Analysis
-
 **Distribution of Power Outages**
 
 The histogram below shows the frequency of power outages for each U.S. state from 2000 to 2016 in our dataset.
@@ -98,6 +94,7 @@ In this histogram, we notice that California has the highest number of power out
   frameborder="0"
 ></iframe>
 
+**Distribution of Power Outages**
 
 The histogram below shows the frequency of power outages for each U.S. state from 2000 to 2016 in our dataset.
 
@@ -110,8 +107,12 @@ In this histogram, we are immediately drawn to the spike in outages during the y
   frameborder="0"
 ></iframe>
 
+### Bivariate Analysis
+**Distribution of Oceanic Niño Index**
 
+The scatter plot below shows the yearly magnitude and trend of the Oceanic Niño Index from 2000 to 2016 in our dataset.
 
+In this scatter plot, we notice notable fluctuations in the Oceanic Niño Index, similar to a pattern of oscillation in the data. This suggest that the effects of El Niño and La Niña are stronger during certain years. Towards the latter part of the plot, there is a sudden increase in the index, reaching values of 2 and 2.5 not seen prior to 2015, indicating a stronger than expected El Niño or La Niña effect.
 
 <iframe
   src="assets/bivariate_1.html"
@@ -120,8 +121,10 @@ In this histogram, we are immediately drawn to the spike in outages during the y
   frameborder="0"
 ></iframe>
 
+**Distribution of Customers Affected**
+The box plot below shows the relationship between the climate regions in U.S. and the number of customers affected by power outage events in those regions from 2000 to 2016 in our dataset.
 
-
+This box plot reveals that the East North Central climate region experiences the highest impact in terms of customers affected by power outages. We know this from the high 25th and 75th quartiles, and mean when compared to all the other box plots. Following the East North Central climate region are Central, South, and Southwest. This suggests that East North Central power outages are more severe in magnitude and range than any other climate region.
 
 <iframe
   src="assets/bivariate_2.html"
@@ -129,6 +132,25 @@ In this histogram, we are immediately drawn to the spike in outages during the y
   height="600"
   frameborder="0"
 ></iframe>
+
+**Interesting Aggregates**
+
+A pivot table is show below. According to the pivot table, it is apparent that the Southwest and Northwest climate regions were the least affected by power outages, for many of their columns are filled with zeros representing zero hours of power outage during those years. On the other hand, when we look at the columns for the South climate region, all the columns are filled with large values. This indicates that the South climate region was one of the most heavily affected by power outages. These findings are consistent with the boxplot seen above.
+
+|     2000 |   2001 |   2002 |   2003 |   2004 |     2005 |   2006 |   2007 |     2008 |     2009 |     2010 |       2011 |      2012 |     2013 |   2014 |     2015 |     2016 |
+|---------:|-------:|-------:|-------:|-------:|---------:|-------:|-------:|---------:|---------:|---------:|-----------:|----------:|---------:|-------:|---------:|---------:|
+| 119099   |      0 |  95000 | 318100 | 174000 | 154856   | 190591 | 214838 | 132136   | 120287   | 173870   |  95013.7   | 146644    |  98599.9 | 118609 |  20665.6 |      0   |
+|      0   |      0 | 190000 | 357111 | 180536 | 152265   | 283544 | 111112 | 165294   |  93563.9 |  98946.8 |  77225.3   |  86796.2  | 140964   | 105751 | 104572   | 102070   |
+|      0   | 130000 | 142181 | 500075 | 104730 |  84916.3 | 141155 | 119944 | 123926   |  79768.6 | 137199   |  98351.2   | 107194    |  35738.3 | 232832 |  99042.2 |  14367.7 |
+|      0   |      0 |      0 | 100000 | 122333 |      0   | 176807 | 135216 |   4001.5 |  93300   | 107812   |    884.615 |  71000    | 105000   |      0 | 150033   |   5600   |
+| 595250   |  58193 | 609261 | 122843 | 130679 | 307982   | 123860 | 155894 | 586450   | 170576   | 174506   |  73056.5   |  70287.2  | 195482   |  42600 |  78371   | 118680   |
+|  91777.8 | 600000 |  77500 | 145583 | 305434 | 306466   |  85000 |  82750 | 152016   |  99250   |  62945.8 | 100822     | 208156    |  97048.6 | 290377 | 113548   |  67781.7 |
+| 270456   |      0 |      0 |  68500 |  30000 |      0   |  65000 |      0 |  74031   | 113029   |  31000   |  32866.7   |   7594.75 |  11743.3 |      0 |   1450   |  12556   |
+|  32000   | 175611 | 769750 | 115750 | 197855 | 613378   | 493523 | 179952 | 265810   | 246725   | 170847   |  62703.7   |  18166.1  |  44523.3 | 933475 |  20034.5 |  28575   |
+|      0   |      0 |      0 |      0 | 120212 |      0   |  15000 |      0 | 126000   |  35500   |      0   |  11500     |      0    |      0   |      0 |      0   |      0   |
+
+Additional research shows, "Tropical cyclones, storms with high winds that originate over tropical oceans, make a power outage 14 times more likely. And a tropical cyclone with heavy precipitation on a hot day—like the hurricanes that each fall hit the Gulf Coast? They make power outages 52 times more likely" [(source)](https://deohs.washington.edu/hsm-blog/these-four-regions-us-are-hardest-hit-power-outages). The article's findings are consistent with the pivot table and boxplot seen above.
+
 
 
 **Data Cleaning**
@@ -246,7 +268,7 @@ fig_4.show()
 
 **Interesting Aggregates**
 
-A pivot table is show below. According to the pivot table, it is apparent that the southwest and northwest climate regions were the least affected by power outages, for many of their columns are filled with zeros to represent 0 hours of power outage during those years. On the other hand, when look at the columns for the south climate region, all the columns are filled with large values. This indicates that the south climate region was one of the most heavily affected by power outages. These findings are consistent with the boxplot seen above.
+A pivot table is show below. According to the pivot table, it is apparent that the Southwest and Northwest climate regions were the least affected by power outages, for many of their columns are filled with zeros to represent 0 hours of power outage during those years. On the other hand, when look at the columns for the South climate region, all the columns are filled with large values. This indicates that the South climate region is one of the most heavily affected by power outages. These findings are consistent with the boxplot seen above.
 
 ```py
 pd.pivot_table(outages, values='CUSTOMERS.AFFECTED', index='CLIMATE.REGION', 
@@ -255,7 +277,6 @@ pd.pivot_table(outages, values='CUSTOMERS.AFFECTED', index='CLIMATE.REGION',
 
 ### TABLE
 
-Additional research shows, "Tropical cyclones, storms with high winds that originate over tropical oceans, make a power outage 14 times more likely. And a tropical cyclone with heavy precipitation on a hot day—like the hurricanes that each fall hit the Gulf Coast? They make power outages 52 times more likely" (https://deohs.washington.edu/hsm-blog/these-four-regions-us-are-hardest-hit-power-outages).
 
 ---
 
