@@ -122,6 +122,7 @@ In this scatter plot, we notice notable fluctuations in the Oceanic Niño Index,
 ></iframe>
 
 **Distribution of Customers Affected**
+
 The box plot below shows the relationship between the climate regions in U.S. and the number of customers affected by power outage events in those regions from 2000 to 2016 in our dataset.
 
 This box plot reveals that the East North Central climate region experiences the highest impact in terms of customers affected by power outages. We know this from the high 25th and 75th quartiles, and mean when compared to all the other box plots. Following the East North Central climate region are Central, South, and Southwest. This suggests that East North Central power outages are more severe in magnitude and range than any other climate region.
